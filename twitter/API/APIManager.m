@@ -10,8 +10,8 @@
 #import "Tweet.h"
 
 static NSString * const baseURLString = @"https://api.twitter.com";
-static NSString * const consumerKey = @"GIVYFg6IDLD31J7febdvipvvD";
-static NSString * const consumerSecret = @"ZUI7CY6n8Zij5tC674hZDk4vCFMIIf2v47UMoyfdLrr2KPUisy";
+static NSString * const consumerKey = @"5lUJuO5AUpPUCez4ewYDFrtgh";
+static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv1o2TKhS1avCdS";
 
 @interface APIManager()
 
@@ -69,10 +69,11 @@ static NSString * const consumerSecret = @"ZUI7CY6n8Zij5tC674hZDk4vCFMIIf2v47UMo
 
 
 // POST request
-- (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion {
+
+- (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *tweet, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
-    
+ 
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
         completion(tweet, nil);
@@ -80,5 +81,15 @@ static NSString * const consumerSecret = @"ZUI7CY6n8Zij5tC674hZDk4vCFMIIf2v47UMo
         completion(nil, error);
     }];
 }
+    //    NSString *urlString = @"1.1/statuses/update.json";
+//    NSDictionary *parameters = @{@"status": text};
+//
+//    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
+//        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
+//        completion(tweet, nil);
+//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//        completion(nil, error);
+//    }];
+
 
 @end

@@ -47,28 +47,42 @@
 
 
 - (IBAction)postTweet:(UIBarButtonItem *)sender {
-    [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:nil];
+    // [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:nil];
     // Print out tweet on the console
     NSLog( @"%@", [NSString stringWithFormat:@"%@", self.tweetTextView.text]);
+    
+    [[APIManager shared]postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+        }
+        else{
+            [self.delegate didTweet:tweet];
+            NSLog(@"Compose Tweet Success!");
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    
+    
 }
 
 
 // Put placeholder on tweet text view
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    if ([self.tweetTextView.text isEqualToString:@"Start typing..."]) {
-        self.tweetTextView.text = @"";
-        self.tweetTextView.textColor = [UIColor lightGrayColor];
-    }
-    [self.tweetTextView becomeFirstResponder];
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    if ([self.tweetTextView.text isEqualToString:@""]) {
-        self.tweetTextView.text = @"Start typing...";
-        self.tweetTextView.textColor = [UIColor lightGrayColor];
-    }
-    [self.tweetTextView resignFirstResponder];
-}
+//- (void)textViewDidBeginEditing:(UITextView *)textView {
+//    if ([self.tweetTextView.text isEqualToString:@"Start typing..."]) {
+//        self.tweetTextView.text = @"";
+//        self.tweetTextView.textColor = [UIColor lightGrayColor];
+//    }
+//    [self.tweetTextView becomeFirstResponder];
+//}
+//
+//- (void)textViewDidEndEditing:(UITextView *)textView {
+//    if ([self.tweetTextView.text isEqualToString:@""]) {
+//        self.tweetTextView.text = @"Start typing...";
+//        self.tweetTextView.textColor = [UIColor lightGrayColor];
+//    }
+//    [self.tweetTextView resignFirstResponder];
+//}
 
 @end

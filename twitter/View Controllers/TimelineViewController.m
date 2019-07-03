@@ -17,7 +17,7 @@
 @interface TimelineViewController () < ComposeViewControllerDelegate,UITableViewDataSource, UITableViewDelegate>
 
     // Tweets array
-@property (strong, nonatomic) NSArray *tweets;
+@property (strong, nonatomic) NSMutableArray *tweets;
 
     // Table view
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -130,8 +130,14 @@
     return cell;
 }
 
+// Method called after composing a tweet
+// Receives the tweet and adds it to tweets array and cell
 - (void)didTweet:(Tweet *)tweet {
-    // implement
+    // self.tweets[self.tweets.count] = tweet;
+    
+    [self.tweets addObject:tweet];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation
