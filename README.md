@@ -8,8 +8,8 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User sees app icon in home screen and styled launch screen
-- [ ] User can sign in using OAuth login flow
+- [x] User sees app icon in home screen and styled launch screen
+- [x] User can sign in using OAuth login flow
 - [ ] User can Logout
 - [ ] User can view last 20 tweets from their home timeline
 - [ ] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.
@@ -22,15 +22,15 @@ The following **optional** features are implemented:
 
 - [ ] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [ ] User can view their profile in a *profile tab*
-- Contains the user header view: picture and tagline
-- Contains a section with the users basic stats: # tweets, # following, # followers
+- [ ] Contains the user header view: picture and tagline
+- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] Profile view should include that user's timeline
 - [ ] User should display the relative timestamp for each tweet "8m", "7h"
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count. Refer to [[this guide|unretweeting]] for help on implementing unretweeting.
 - [ ] Links in tweets are clickable.
 - [ ] User can tap the profile image in any tweet to see another user's profile
-- Contains the user header view: picture and tagline
-- Contains a section with the users basic stats: # tweets, # following, # followers
+- [ ] Contains the user header view: picture and tagline
+- [ ] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] User can load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client.
 - [ ] When composing, you should have a countdown for the number of characters remaining for the tweet (out of 140) (**1 point**)
 - [ ] After creating a new tweet, a user should be able to view it in the timeline immediately without refetching the timeline from the network.
