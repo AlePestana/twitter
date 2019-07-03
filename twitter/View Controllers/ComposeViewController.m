@@ -7,13 +7,17 @@
 //
 
 #import "ComposeViewController.h"
+#import "APIManager.h"
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITextViewDelegate>
     // Close action declaration
 - (IBAction)close:(UIBarButtonItem *)sender;
 
     // Post tweet action declaration
 - (IBAction)postTweet:(UIBarButtonItem *)sender;
+
+    // Tweet text view
+@property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
 
 @end
 
@@ -22,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self textViewDidBeginEditing:self.tweetTextView];
+    [self textViewDidEndEditing:self.tweetTextView];
 }
 
 /*
@@ -41,5 +47,28 @@
 
 
 - (IBAction)postTweet:(UIBarButtonItem *)sender {
+    [[APIManager shared] postStatusWithText:self.tweetTextView.text completion:nil];
+    // Print out tweet on the console
+    NSLog( @"%@", [NSString stringWithFormat:@"%@", self.tweetTextView.text]);
 }
+
+
+// Put placeholder on tweet text view
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if ([self.tweetTextView.text isEqualToString:@"Start typing..."]) {
+        self.tweetTextView.text = @"";
+        self.tweetTextView.textColor = [UIColor lightGrayColor];
+    }
+    [self.tweetTextView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if ([self.tweetTextView.text isEqualToString:@""]) {
+        self.tweetTextView.text = @"Start typing...";
+        self.tweetTextView.textColor = [UIColor lightGrayColor];
+    }
+    [self.tweetTextView resignFirstResponder];
+}
+
 @end

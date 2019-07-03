@@ -11,9 +11,10 @@
 #import "APIManager.h"
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "ComposeViewController.h"
 
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () < ComposeViewControllerDelegate,UITableViewDataSource, UITableViewDelegate>
 
     // Tweets array
 @property (strong, nonatomic) NSArray *tweets;
@@ -35,64 +36,53 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    [self fetchTweets];
+    
     // Refresh control initialization
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl
         addTarget:self
-        action:@selector(beginRefresh:)
+     action:@selector(beginRefresh:)
         forControlEvents:UIControlEventValueChanged
     ];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
 
-    [self.tableView reloadData];
-    [self fetchTweets];
+    // [self.tableView reloadData];
+
 }
 
 
 // Function that fetches the tweets
 - (void)fetchTweets {
-    
-    // Get timeline
+
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweetsFetched, NSError *error) {
         
         if (tweetsFetched) {
-                // Save tweets in tweets array from API
-                self.tweets = tweetsFetched;
-                // Update user interface (UI)
-                [self.tableView reloadData];
-    } else {
+            // Save tweets in tweets array from API
+            self.tweets = tweetsFetched;
+            // Update user interface (UI)
+            [self.tableView reloadData];
+            
+        } else {
             NSLog(@"Error getting home timeline: %@", error.localizedDescription);
             
         }
-        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+        
     }];
+    
 }
 
 // Function that makes a network request to get updated data
 // Updates the tableView with the new data
 // Hides the RefreshControl
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@", [self init]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    // Create NSURL and NSURLRequest
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    session.configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                
-          // ... Use the new data to update the data source ...
-                                                
+        
+    [self fetchTweets];
           // Reload the tableView now that there is new data
-          [self.tableView reloadData];
-                                                
+          // [self.tableView reloadData];
            // Tell the refreshControl to stop spinning
-          [refreshControl endRefreshing];
-                                                
-    }];
-    
-    [task resume];
+          // [self.refreshControl endRefreshing];
 }
 
 
@@ -129,24 +119,32 @@
     cell.favoriteCount.text = [NSString stringWithFormat:@"%d",tweet.favoriteCount];
     //cell.profileImage.image = nil;
     
+    cell.profileImage.image = nil;
     NSString *profileImageURL = tweet.user.profileImage;
     
     NSURL *url = [NSURL URLWithString:profileImageURL];
     [cell.profileImage setImageWithURL:url];
+   
     
     // Return cell to the table view
     return cell;
 }
 
-/*
+- (void)didTweet:(Tweet *)tweet {
+    // implement
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UINavigationController *navigationController = [segue destinationViewController];
+    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+    composeController.delegate = self;
+    
 }
-*/
 
 
 @end
