@@ -15,9 +15,14 @@
 
 @interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
 
-// Tweets array
+    // Tweets array
 @property (strong, nonatomic) NSArray *tweets;
+
+    // Table view
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+    // Refresh control
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -30,33 +35,64 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    // Refresh control initialization
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl
+        addTarget:self
+        action:@selector(beginRefresh:)
+        forControlEvents:UIControlEventValueChanged
+    ];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
+
+    [self.tableView reloadData];
     [self fetchTweets];
 }
 
+
+// Function that fetches the tweets
 - (void)fetchTweets {
     
     // Get timeline
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweetsFetched, NSError *error) {
         
         if (tweetsFetched) {
-            
-            
-            // NSLog(@"Successfully loaded home timeline");
-            // for (Tweet *tweet in tweetsFetched) {
-            //    NSString *text = tweet[@"text"];
-            //    NSLog(@"%@", text);
-            // }
-                
                 // Save tweets in tweets array from API
                 self.tweets = tweetsFetched;
                 // Update user interface (UI)
                 [self.tableView reloadData];
-            
     } else {
             NSLog(@"Error getting home timeline: %@", error.localizedDescription);
             
         }
+        [self.tableView reloadData];
     }];
+}
+
+// Function that makes a network request to get updated data
+// Updates the tableView with the new data
+// Hides the RefreshControl
+- (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@", [self init]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    // Create NSURL and NSURLRequest
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    session.configuration.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+    
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                
+          // ... Use the new data to update the data source ...
+                                                
+          // Reload the tableView now that there is new data
+          [self.tableView reloadData];
+                                                
+           // Tell the refreshControl to stop spinning
+          [refreshControl endRefreshing];
+                                                
+    }];
+    
+    [task resume];
 }
 
 
@@ -65,11 +101,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+// Protocol method that returns the amount of tweets (20)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Returns the number of tweets I have on my tweets array
     return self.tweets.count;
 }
 
+
+// Protocol method that returns the cell with all its information
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Deque cell
