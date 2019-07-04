@@ -25,7 +25,7 @@ The following **optional** features are implemented:
 - [ ] Contains the user header view: picture and tagline
 - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] Profile view should include that user's timeline
-- [ ] User should display the relative timestamp for each tweet "8m", "7h"
+- [x] User should display the relative timestamp for each tweet "8m", "7h"
 - [ ] User should be able to unretweet and unfavorite and should decrement the retweet and favorite count. Refer to [[this guide|unretweeting]] for help on implementing unretweeting.
 - [ ] Links in tweets are clickable.
 - [ ] User can tap the profile image in any tweet to see another user's profile
@@ -42,7 +42,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] Customize UI to provide a different experience.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

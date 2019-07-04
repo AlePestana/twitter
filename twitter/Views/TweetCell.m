@@ -24,31 +24,62 @@
 }
 
 
-- (IBAction)didTapFavorite:(id)sender {
-    
+- (IBAction)didTapFavorite:(UIButton *)sender {
+
     // Update the local tweet model
-    self.tweet.favorited = YES;
-    self.tweet.favoriteCount += 1;
-    self.favoriteButton.selected = YES;
     
     // Update cell UI
-    
-    // --------------------------------------------------------------------------------------->>> check: something missing, strong, self.tweet
-    // Send a POST request to the POST favorites/create endpoint
-    [[APIManager shared]favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
-        if(error){
-            // NSLog(@"Error composing Tweet: %@", error.localizedDescription);
-        }
-        else {
-            if ([sender isSelected]) {
-                [sender setImage:self.profileImage forState:UIControlStateNormal];
-                [sender setSelected:NO];
-            } else {
-                [sender setImage:self.profileImage forState:UIControlStateSelected];
-                [sender setSelected:YES];
+    if (self.tweet.favorited) {
+        self.tweet.favorited = NO;
+        self.tweet.favoriteCount -= 1;
+        self.favoriteButton.selected = NO;
+        // Refresh image
+        // [sender setImage:self.favoriteButton forState:UIControlStateNormal];
+        [self.favoriteButton setSelected:NO];
+        
+        [self refreshData];
+        
+        // Send a POST request to the POST favorites/create endpoint
+        // For favoriting
+        [[APIManager shared]unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
             }
-        }
-    }];
+            else {
+                // NSLog(@"Successful");
+                
+            }
+        }];
+        
+        
+    } else {
+        self.tweet.favorited = YES;
+        self.tweet.favoriteCount += 1;
+        self.favoriteButton.selected = YES;
+        // Refresh image
+        // [sender setImage:self.favoriteButton forState:UIControlStateSelected];
+        [self.favoriteButton setSelected:YES];
+        
+        [self refreshData];
+        
+        // Send a POST request to the POST favorites/create endpoint
+        // For favoriting
+        [[APIManager shared]favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else {
+                // NSLog(@"Successful");
+                
+            }
+        }];
+        
+    }
+}
+
+-(void)refreshData {
+    self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
 }
 
 

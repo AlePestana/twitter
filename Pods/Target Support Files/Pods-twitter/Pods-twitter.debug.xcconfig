@@ -1,8 +1,7 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager"
-LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"AFNetworking" -l"BDBOAuth1Manager" -framework "CoreGraphics" -framework "MobileCoreServices" -framework "Security" -framework "SystemConfiguration"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/BDBOAuth1Manager" "${PODS_ROOT}/Headers/Public/DateTools" "${PODS_ROOT}/Headers/Public/TTTAttributedLabel"
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/BDBOAuth1Manager" "${PODS_CONFIGURATION_BUILD_DIR}/DateTools" "${PODS_CONFIGURATION_BUILD_DIR}/TTTAttributedLabel"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"AFNetworking" -l"BDBOAuth1Manager" -l"DateTools" -l"TTTAttributedLabel" -framework "CoreGraphics" -framework "CoreText" -framework "MobileCoreServices" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
