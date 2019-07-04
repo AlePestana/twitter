@@ -111,7 +111,8 @@
     
         // Assign values to my properties
     cell.authorName.text = tweet.user.name;
-    cell.authorAccountName.text = tweet.user.screenName;
+    NSString *accountBase = @"@";
+    cell.authorAccountName.text = [accountBase stringByAppendingString:tweet.user.screenName];
     cell.date.text = tweet.createdAtString;
     cell.tweetText.text = tweet.text;
     cell.retweetCount.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
