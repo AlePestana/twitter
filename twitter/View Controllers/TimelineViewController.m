@@ -107,7 +107,6 @@
     
     // Update cell with tweet data
     Tweet *tweet = self.tweets[indexPath.row];
-    // cell.tweet = tweet;
         // "Grab" values from the dictionary
     
         // Assign values to my properties
@@ -117,7 +116,6 @@
     cell.tweetText.text = tweet.text;
     cell.retweetCount.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCount.text = [NSString stringWithFormat:@"%d",tweet.favoriteCount];
-    //cell.profileImage.image = nil;
     
     cell.profileImage.image = nil;
     NSString *profileImageURL = tweet.user.profileImage;
@@ -125,7 +123,6 @@
     NSURL *url = [NSURL URLWithString:profileImageURL];
     [cell.profileImage setImageWithURL:url];
    
-    
     // Return cell to the table view
     return cell;
 }
