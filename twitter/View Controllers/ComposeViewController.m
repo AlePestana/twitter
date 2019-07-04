@@ -23,6 +23,7 @@
 
 @implementation ComposeViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -39,23 +40,25 @@
 }
 */
 
+
 // Function that calls a method to close the view controller
 - (IBAction)close:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
 
+// Function in charge of all the tasks related to composing and posting a tweet
 - (IBAction)postTweet:(UIBarButtonItem *)sender {
     // Print out tweet on the console
-    NSLog( @"%@", [NSString stringWithFormat:@"%@", self.tweetTextView.text]);
+    // NSLog( @"%@", [NSString stringWithFormat:@"%@", self.tweetTextView.text]);
     
     [[APIManager shared]postStatusWithText:self.tweetTextView.text completion:^(Tweet *tweet, NSError *error) {
         if(error){
-            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            // NSLog(@"Error composing Tweet: %@", error.localizedDescription);
         }
         else{
             [self.delegate didTweet:tweet];
-            NSLog(@"Compose Tweet Success!");
+            // NSLog(@"Compose Tweet Success!");
             
             [self dismissViewControllerAnimated:YES completion:nil];
         }

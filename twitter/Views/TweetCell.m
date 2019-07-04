@@ -8,6 +8,7 @@
 
 #import "TweetCell.h"
 #import "Tweet.h"
+#import "APIManager.h"
 
 @implementation TweetCell
 
@@ -25,15 +26,29 @@
 
 - (IBAction)didTapFavorite:(id)sender {
     
-    // TODO: Update the local tweet model
+    // Update the local tweet model
     self.tweet.favorited = YES;
     self.tweet.favoriteCount += 1;
     self.favoriteButton.selected = YES;
     
-    // TODO: Update cell UI
+    // Update cell UI
     
-    
-    // TODO: Send a POST request to the POST favorites/create endpoint
+    // --------------------------------------------------------------------------------------->>> check: something missing, strong, self.tweet
+    // Send a POST request to the POST favorites/create endpoint
+    [[APIManager shared]favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+            // NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+        }
+        else {
+            if ([sender isSelected]) {
+                [sender setImage:self.profileImage forState:UIControlStateNormal];
+                [sender setSelected:NO];
+            } else {
+                [sender setImage:self.profileImage forState:UIControlStateSelected];
+                [sender setSelected:YES];
+            }
+        }
+    }];
 }
 
 

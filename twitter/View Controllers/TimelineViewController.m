@@ -12,6 +12,8 @@
 #import "TweetCell.h"
 #import "Tweet.h"
 #import "ComposeViewController.h"
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 
 @interface TimelineViewController () < ComposeViewControllerDelegate,UITableViewDataSource, UITableViewDelegate>
@@ -46,8 +48,6 @@
         forControlEvents:UIControlEventValueChanged
     ];
     [self.tableView insertSubview:self.refreshControl atIndex:0];
-
-    // [self.tableView reloadData];
 
 }
 
@@ -139,7 +139,8 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+
+// Function that allows navigation between screens to occur
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -147,6 +148,21 @@
     ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
     composeController.delegate = self;
     
+}
+
+
+// Function that allows the user to logout of the application
+// Connected to "Logout" button on the storyboard
+- (IBAction)didLogout:(UIBarButtonItem *)sender {
+    // Setting the root view controller will immediately switch the screen to that view controller
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    
+    // Clear out access tokens
+    [[APIManager shared] logout];
 }
 
 
