@@ -1,0 +1,6 @@
+module Pods_twitter {
+  umbrella header "Pods-twitter-umbrella.h"
+
+  export *
+  module * { export * }
+}
