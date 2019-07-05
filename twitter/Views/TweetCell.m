@@ -82,5 +82,44 @@
     self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
 }
 
+- (IBAction)didTapRetweet:(UIButton *)sender {
+
+    // Update the local tweet model
+    NSString *rt;
+    
+    // Update cell UI
+    if (self.tweet.retweeted) {
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        self.retweetButton.selected = NO;
+        [self.retweetButton setSelected:NO];
+        
+        rt = @"unretweet";
+        
+    } else {
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        self.retweetButton.selected = YES;
+        [self.retweetButton setSelected:YES];
+        
+        rt = @"retweet";
+
+    }
+    [self refreshData];
+    
+    // Send a POST request to the POST favorites/create endpoint
+    // For both retweeting and unretweeting
+    [[APIManager shared] retweet:self.tweet do:rt completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Successful");
+            
+        }
+    }];
+
+}
+
 
 @end
