@@ -458,6 +458,9 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="retweet-icon"/>
                                 <state key="selected" image="retweet-icon-green"/>
+                                <connections>
+                                    <action selector="didTapRetweet:" destination="ruG-sp-TqL" eventType="touchUpInside" id="si6-Ha-9S7"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yz6-Xi-Ecr">
                                 <rect key="frame" x="103" y="285" width="28" height="29"/>
@@ -467,6 +470,9 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="favor-icon"/>
                                 <state key="selected" image="favor-icon-red"/>
+                                <connections>
+                                    <action selector="didTapFavorite:" destination="ruG-sp-TqL" eventType="touchUpInside" id="IcX-k7-jRP"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rtw" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JfU-F1-fCJ">
                                 <rect key="frame" x="49" y="289" width="29" height="21"/>
@@ -507,11 +513,11 @@
                     </view>
                     <connections>
                         <outlet property="authorAccount" destination="66u-Ft-Ek3" id="OxX-AO-6Y3"/>
-                        <outlet property="authorName" destination="o14-wX-mIY" id="Bem-9V-mTj"/>
+                        <outlet property="authorName" destination="o14-wX-mIY" id="99B-aD-ku6"/>
                         <outlet property="date" destination="4sb-z4-ms7" id="Unl-lc-nQ3"/>
                         <outlet property="favoriteButton" destination="yz6-Xi-Ecr" id="05y-Ib-yOI"/>
                         <outlet property="favoriteCount" destination="dun-Xe-2l0" id="Blh-tV-Pew"/>
-                        <outlet property="profileImage" destination="yTs-di-gsH" id="X4A-b0-yHq"/>
+                        <outlet property="profileImage" destination="yTs-di-gsH" id="hQS-dN-1zi"/>
                         <outlet property="retweetButton" destination="SJT-bi-URa" id="Lzm-BW-ID5"/>
                         <outlet property="retweetCount" destination="JfU-F1-fCJ" id="Seb-9l-1gX"/>
                         <outlet property="tweetText" destination="Njm-jU-oVP" id="6gq-mv-vj4"/>

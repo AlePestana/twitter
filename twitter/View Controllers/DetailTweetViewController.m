@@ -8,6 +8,9 @@
 
 #import "DetailTweetViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "Tweet.h"
+#import "User.h"
+#import "APIManager.h"
 
 
 @interface DetailTweetViewController ()
@@ -28,7 +31,133 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // _tweet = tweet;
+    
+    User *user = self.tweet.user;
+    
 
+    // Assign values to my properties
+    self.authorName.text = user.name;
+    
+    NSString *accountBase = @"@";
+    self.authorAccount.text = [accountBase stringByAppendingString:self.tweet.user.screenName];
+
+    self.tweetText.text = self.tweet.text;
+    self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+
+    self.date.text = self.tweet.createdAtString;
+
+    NSString *profileImageURL = self.tweet.user.profileImage;
+
+    self.profileImage.image = nil;
+    NSURL *url = [NSURL URLWithString:profileImageURL];
+    [self.profileImage setImageWithURL:url placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
+    
+     // Some images were not downloaded
+    
+}
+
+
+// Function that refreshes the data
+-(void)refreshData {
+    self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
+    self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+}
+
+
+- (IBAction)didTapFavorite:(UIButton *)sender {
+    
+    // Update the local tweet model
+    
+    // Update cell UI
+    if (self.tweet.favorited) {
+        self.tweet.favorited = NO;
+        self.tweet.favoriteCount -= 1;
+        self.favoriteButton.selected = NO;
+        // Refresh image
+        // [sender setImage:self.favoriteButton forState:UIControlStateNormal];
+        [self.favoriteButton setSelected:NO];
+        
+        [self refreshData];
+        
+        // Send a POST request to the POST favorites/create endpoint
+        // For favoriting
+        [[APIManager shared]unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else {
+                // NSLog(@"Successful");
+                
+            }
+        }];
+        
+        
+    } else {
+        self.tweet.favorited = YES;
+        self.tweet.favoriteCount += 1;
+        self.favoriteButton.selected = YES;
+        // Refresh image
+        // [sender setImage:self.favoriteButton forState:UIControlStateSelected];
+        [self.favoriteButton setSelected:YES];
+        
+        [self refreshData];
+        
+        // Send a POST request to the POST favorites/create endpoint
+        // For favoriting
+        [[APIManager shared]favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+            if(error){
+                NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+            }
+            else {
+                // NSLog(@"Successful");
+                
+            }
+        }];
+        
+    }
+    
+}
+
+- (IBAction)didTapRetweet:(UIButton *)sender {
+    
+    // Update the local tweet model
+    NSString *rt;
+    
+    // Update cell UI
+    if (self.tweet.retweeted) {
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        self.retweetButton.selected = NO;
+        [self.retweetButton setSelected:NO];
+        
+        rt = @"unretweet";
+        
+    } else {
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        self.retweetButton.selected = YES;
+        [self.retweetButton setSelected:YES];
+        
+        rt = @"retweet";
+        
+    }
+    [self refreshData];
+    
+    // Send a POST request to the POST favorites/create endpoint
+    // For both retweeting and unretweeting
+    [[APIManager shared] retweet:self.tweet do:rt completion:^(Tweet *tweet, NSError *error) {
+        if(error){
+            NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Successful");
+            
+        }
+    }];
+    
 }
 
 /*
@@ -40,41 +169,6 @@
  // Pass the selected object to the new view controller.
  }
  */
-
-// Do any additional setup after loading the view.
-
-// Poster image view
-// Process to make complete URL post and display image
-
-
-
-//NSString *baseURLString = @"https://image.tmdb.org/t/p/w500";
-//NSString *posterURLString = self.movie[@"poster_path"];
-//NSString *completePosterURLString = [baseURLString stringByAppendingString:posterURLString];
-//
-//NSURL *posterURL = [NSURL URLWithString:completePosterURLString];
-//
-//// Set image using function from AFNerwork using URL
-//[self.posterView setImageWithURL:posterURL];
-//
-//// Bakckdrop image view
-//// Process to make complete URL post and display image
-//NSString *backdropURLString = self.movie[@"backdrop_path"];
-//NSString *completeBackdropURLString = [baseURLString stringByAppendingString:backdropURLString];
-//
-//NSURL *backdropURL = [NSURL URLWithString:completeBackdropURLString];
-//
-//// Set image using function from AFNerwork using URL
-//[self.backdropView setImageWithURL:backdropURL];
-//
-//// Set remaining properties of the Details View Controller
-//self.titleLabel.text = self.movie[@"title"];
-//self.synopsisLabel.text = self.movie[@"overview"];
-//self.dateLabel.text = self.movie[@"release_date"];
-//
-//// Function that adjusts label to fill content
-//[self.titleLabel sizeToFit];
-//[self.synopsisLabel sizeToFit];
 
 @end
 

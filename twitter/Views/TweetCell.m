@@ -37,8 +37,10 @@
     
     self.profileImage.image = nil;
     NSURL *url = [NSURL URLWithString:profileImageURL];
-    [self.profileImage setImageWithURL:url];
+    [self.profileImage setImageWithURL:url placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
     
+    // Some images were not downloaded
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
