@@ -9,6 +9,8 @@
 #import "TweetCell.h"
 #import "Tweet.h"
 #import "APIManager.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @implementation TweetCell
 
@@ -80,6 +82,12 @@
 -(void)refreshData {
     self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
+    
+    self.profileImage.image = nil;
+    NSString *profileImageURL = self.tweet.user.profileImage;
+    
+    NSURL *url = [NSURL URLWithString:profileImageURL];
+    [self.profileImage setImageWithURL:url];
 }
 
 - (IBAction)didTapRetweet:(UIButton *)sender {

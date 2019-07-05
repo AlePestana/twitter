@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "NSDate+DateTools.h"
+#import "DetailTweetViewController.h"
 
 
 @interface TimelineViewController () < ComposeViewControllerDelegate,UITableViewDataSource, UITableViewDelegate>
@@ -29,6 +30,7 @@
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
+
 
 @implementation TimelineViewController
 
@@ -148,25 +150,22 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-    composeController.delegate = self;
     
-}
-
-
-// Function that allows the user to logout of the application
-// Connected to "Logout" button on the storyboard
-- (IBAction)didLogout:(UIBarButtonItem *)sender {
-    // Setting the root view controller will immediately switch the screen to that view controller
-    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if ([[segue identifier] isEqualToString:@"composeSegue"]) {
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    appDelegate.window.rootViewController = loginViewController;
+        UINavigationController *navigationController = [segue destinationViewController];
+        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+        composeController.delegate = self;
     
-    // Clear out access tokens
-    [[APIManager shared] logout];
+    } else if ([[segue identifier] isEqualToString:@"detailSegue"]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Tweet *tweet = self.tweets[indexPath.row];
+        
+        DetailTweetViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.tweet = tweet;
+        NSLog(@"Success");
+    }
 }
 
 

@@ -69,10 +69,10 @@
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-    
-    
 }
 
+
+// Function that 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     // TODO: Check the proposed new text character count
     // Allow or disallow the new text
