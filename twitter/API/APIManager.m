@@ -133,4 +133,21 @@ static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv
 }
 
 
+// GET request
+//- (void)getUserTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
+//
+//    // Create a GET Request
+//    [self GET:@"1.1/account/settings.json"
+//   parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, Ns *  _Nullable tweetDictionaries) {
+//       // Success
+//       NSString *userName =
+//       NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+//       completion(tweets, nil);
+//   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//       // There was a problem
+//       completion(nil, error);
+//   }];
+//}
+
+
 @end

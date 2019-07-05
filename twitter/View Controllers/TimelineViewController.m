@@ -62,7 +62,7 @@
         
         if (tweetsFetched) {
             // Save tweets in tweets array from API
-            self.tweets = tweetsFetched;
+            self.tweets = [NSMutableArray arrayWithArray:tweetsFetched];
             // Update user interface (UI)
             [self.tableView reloadData];
             
@@ -111,23 +111,6 @@
     // Update cell with tweet data
     Tweet *tweet = self.tweets[indexPath.row];
     cell.tweet = tweet;
-        // "Grab" values from the dictionary
-    
-        // Assign values to my properties
-    cell.authorName.text = tweet.user.name;
-    NSString *accountBase = @"@";
-    cell.authorAccountName.text = [accountBase stringByAppendingString:tweet.user.screenName];
-    cell.tweetText.text = tweet.text;
-    cell.retweetCount.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
-    cell.favoriteCount.text = [NSString stringWithFormat:@"%d",tweet.favoriteCount];
-    
-    cell.date.text = tweet.createdAtString;
-    
-    cell.profileImage.image = nil;
-    NSString *profileImageURL = tweet.user.profileImage;
-    
-    NSURL *url = [NSURL URLWithString:profileImageURL];
-    [cell.profileImage setImageWithURL:url];
    
     // Return cell to the table view
     return cell;
