@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *accountName;
 @property (weak, nonatomic) IBOutlet UILabel *accountUserName;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UIImageView *headerImage;
+@property (weak, nonatomic) IBOutlet UILabel *followingCount;
+@property (weak, nonatomic) IBOutlet UILabel *followerCount;
 
 
 
@@ -66,6 +69,15 @@
                 self.profileImage.image = nil;
                 NSURL *url = [NSURL URLWithString:profileImageURL];
                 [self.profileImage setImageWithURL:url placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
+                
+                self.followerCount.text = [NSString stringWithFormat:@"%@", individualUser.followers];
+                self.followingCount.text = [NSString stringWithFormat:@"%@", individualUser.following];
+                
+//                NSString *headerImageURL = individualUser.headerImage;
+//                self.headerImage.image = nil;
+//
+//                NSURL *urlHeader = [NSURL URLWithString:headerImageURL];
+//                [self.headerImage setImageWithURL:urlHeader placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
                 
             } else {
                 NSLog(@"Error getting user timeline: %@", error.localizedDescription);

@@ -463,6 +463,9 @@
                     <connections>
                         <outlet property="accountName" destination="X5d-g7-THs" id="3BS-0Q-65V"/>
                         <outlet property="accountUserName" destination="mko-bB-olG" id="FcU-ry-jNc"/>
+                        <outlet property="followerCount" destination="ef7-4d-gu3" id="Hcq-wP-aIn"/>
+                        <outlet property="followingCount" destination="Pac-0l-cQL" id="SA5-FD-qcG"/>
+                        <outlet property="headerImage" destination="s9W-IV-LqH" id="vEO-Hs-vjy"/>
                         <outlet property="profileImage" destination="q2q-Rm-OCp" id="9f8-RA-k0C"/>
                         <outlet property="tableView" destination="oqP-QM-4TF" id="TTv-wC-M47"/>
                     </connections>

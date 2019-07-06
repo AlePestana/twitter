@@ -103,10 +103,14 @@
     }
 }
 
+
+// Function 
 -(void)refreshData {
     self.retweetCount.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoriteCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
 }
+
+
 
 - (IBAction)didTapRetweet:(UIButton *)sender {
 

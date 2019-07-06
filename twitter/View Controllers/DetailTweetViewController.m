@@ -56,7 +56,6 @@
     [self.profileImage setImageWithURL:url placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
     
      // Some images were not downloaded
-    
 }
 
 

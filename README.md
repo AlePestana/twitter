@@ -20,8 +20,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
-- [ ] User can view their profile in a *profile tab*
+- [x] Tweet Details Page: User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
+- [x] User can view their profile in a *profile tab*
 - [ ] Contains the user header view: picture and tagline
 - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
 - [ ] Profile view should include that user's timeline
@@ -46,8 +46,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Learn how to make calls to the API
+2. Understand how to use segue
 
 ## Video Walkthrough
 
