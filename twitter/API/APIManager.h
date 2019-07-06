@@ -19,5 +19,7 @@
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
 - (void)retweet:(Tweet *)tweet do: (NSString *) action completion:(void (^)(Tweet *, NSError *))completion;
+- (void)getUserTimelineWithUsername:(NSString*)username withCompletion:(void(^)(NSArray *tweets, NSError *error))completion;
+- (void)getUsernameWithCompletion:(void(^)(NSString *username, NSError *error))completion;
 
 @end

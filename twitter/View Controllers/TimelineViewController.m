@@ -18,7 +18,7 @@
 #import "DetailTweetViewController.h"
 
 
-@interface TimelineViewController () < ComposeViewControllerDelegate,UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () < ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
     // Tweets array
 @property (strong, nonatomic) NSMutableArray *tweets;
@@ -115,6 +115,7 @@
     // Return cell to the table view
     return cell;
 }
+
 
 // Method called after composing a tweet
 // Receives the tweet and adds it to tweets array and cell

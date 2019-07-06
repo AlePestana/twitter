@@ -132,22 +132,37 @@ static NSString * const consumerSecret = @"s5ynGqXzstUZwFPxVyMDkYh197qvHOcVM3kwv
     
 }
 
+// Function to get the screen name of a user
+- (void)getUsernameWithCompletion:(void(^)(NSString *username, NSError *error))completion {
+    // Create a GET Request
+    [self GET:@"1.1/account/settings.json"
+   parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDictionary) {
+       // Success
+       NSString *username = userDictionary[@"screen_name"];
+       completion(username, nil);
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       // There was a problem
+       completion(nil, error);
+   }];
+}
 
-// GET request
-//- (void)getUserTimelineWithCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
-//
-//    // Create a GET Request
-//    [self GET:@"1.1/account/settings.json"
-//   parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, Ns *  _Nullable tweetDictionaries) {
-//       // Success
-//       NSString *userName =
-//       NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
-//       completion(tweets, nil);
-//   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//       // There was a problem
-//       completion(nil, error);
-//   }];
-//}
+
+// Function to get the tweets of a user
+- (void)getUserTimelineWithUsername:(NSString*)username withCompletion:(void(^)(NSArray *tweets, NSError *error))completion {
+    // Create a GET Request
+    NSString *request = [NSString stringWithFormat:@"1.1/statuses/user_timeline.json?screen_name=%@", username];
+    NSDictionary *parameters = @{@"screen_name": username};
+    
+    [self GET:request
+   parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSArray *  _Nullable tweetDictionaries) {
+       // Success
+       NSMutableArray *tweets  = [Tweet tweetsWithArray:tweetDictionaries];
+       completion(tweets, nil);
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       // There was a problem
+       completion(nil, error);
+   }];
+}
 
 
 @end

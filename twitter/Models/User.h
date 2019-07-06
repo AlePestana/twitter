@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *screenName;
     // User profile image
 @property (weak, nonatomic) NSString *profileImage;
+// User profile image
+@property (weak, nonatomic) NSString *headerImage;
 
 // Initializer
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
